@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  tarantool:
+    build:
+      context: .
+      dockerfile: build/tarantool.Dockerfile
+
+  main:
+    depends_on:
+      - tarantool
+    build:
+      context: .
+      dockerfile: build/main.Dockerfile
+    ports:
+      - "8080:8080"
+      - "8000:8000"
