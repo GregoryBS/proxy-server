@@ -20,4 +20,4 @@ COPY config.json config.json
 
 EXPOSE 8080
 EXPOSE 8000
-CMD sleep 10 && ./main
+CMD sleep 5 && ./main
