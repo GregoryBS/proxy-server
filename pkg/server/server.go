@@ -45,7 +45,6 @@ func (h *Handler) handleHTTP(w http.ResponseWriter, r *http.Request) {
 	req.URL.Path = r.RequestURI[strings.Index(r.RequestURI, r.Host)+len(r.Host):]
 	req.Header = r.Header.Clone()
 	req.Header.Del("Proxy-Connection")
-	log.Println(req)
 
 	resp, err := http.DefaultTransport.RoundTrip(req)
 	if err != nil {
@@ -55,14 +54,14 @@ func (h *Handler) handleHTTP(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	io.Copy(w, resp.Body)
-	copyHeader(w.Header(), resp.Header)
+	CopyHeader(w.Header(), resp.Header)
 
 	if err = h.db.Insert(resp, req); err != nil {
 		log.Println(err)
 	}
 }
 
-func copyHeader(dst, src http.Header) {
+func CopyHeader(dst, src http.Header) {
 	for k, vv := range src {
 		for _, v := range vv {
 			dst.Add(k, v)

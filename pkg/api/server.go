@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"proxy/pkg/database"
 
 	"github.com/aerogo/aero"
@@ -24,6 +23,5 @@ func Run() {
 		database.CloseTarantool(db)
 	})
 	app = configure(app, handlers)
-	log.Println(app.Config)
 	app.Run()
 }
